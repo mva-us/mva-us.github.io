@@ -1,239 +1,272 @@
-/* Общие стили для остальных страниц */
+/* ===== ОБЩИЕ СТИЛИ ДЛЯ ОСТАЛЬНЫХ СТРАНИЦ ===== */
+
+/* Сброс стандартных отступов браузера для всех элементов */
 * {
     margin: 0;
     padding: 0;
+    /* Учет padding и border в общей ширине элемента */
     box-sizing: border-box;
 }
 
+/* Стили для основного контента страницы */
 body {
-    font-family: 'Arial', sans-serif;
-    line-height: 1.6;
-    color: #333;
-    background-color: #f9f9f9;
+    font-family: 'Arial', sans-serif; /* Шрифт по умолчанию */
+    line-height: 1.6; /* Межстрочное расстояние для лучшей читаемости */
+    color: #333; /* Основной цвет текста - темно-серый */
+    background-color: #f9f9f9; /* Светлый фон страницы */
 }
 
+/* Контейнер для центрирования и ограничения ширины контента */
 .container {
-    width: 90%;
-    max-width: 1200px;
-    margin: 0 auto;
+    width: 90%; /* Занимает 90% ширины родителя */
+    max-width: 1200px; /* Максимальная ширина на больших экранах */
+    margin: 0 auto; /* Автоматические отступы по бокам для центрирования */
 }
 
-/* Стили для шапки */
+/* ===== СТИЛИ ДЛЯ ШАПКИ САЙТА ===== */
 header {
+    /* Градиентный фон от светлого к темному синему */
     background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
-    color: white;
-    padding: 20px 0;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    color: white; /* Белый текст на темном фоне */
+    padding: 20px 0; /* Вертикальные отступы */
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1); /* Легкая тень для объема */
 }
 
+/* Заголовок в шапке сайта */
 #logo h1 {
-    font-size: 2.5rem;
-    margin-bottom: 5px;
+    font-size: 2.5rem; /* Крупный размер шрифта для заметности */
+    margin-bottom: 5px; /* Небольшой отступ снизу */
 }
 
+/* Подзаголовок в шапке */
 #logo p {
-    font-size: 1.1rem;
-    opacity: 0.9;
+    font-size: 1.1rem; /* Размер шрифта немного больше базового */
+    opacity: 0.9; /* Легкая прозрачность для визуальной иерархии */
 }
 
-/* Стили для навигации */
+/* ===== СТИЛИ ДЛЯ НАВИГАЦИОННОГО МЕНЮ ===== */
 nav {
-    background-color: #34495e;
-    position: sticky;
-    top: 0;
-    z-index: 100;
+    background-color: #34495e; /* Темно-синий фон меню */
+    position: sticky; /* "Липкое" меню - остается при прокрутке */
+    top: 0; /* Прилипает к верху окна браузера */
+    z-index: 100; /* Высокий приоритет отображения поверх других элементов */
 }
 
+/* Контейнер для списка меню */
 .menu {
-    display: flex;
-    list-style: none;
+    display: flex; /* Flexbox для горизонтального расположения */
+    list-style: none; /* Убираем стандартные маркеры списка */
 }
 
+/* Элементы списка меню */
 .menu li {
-    flex: 1;
+    flex: 1; /* Равномерное распределение пространства между пунктами */
 }
 
+/* Ссылки в меню */
 .menu a {
-    display: block;
-    color: white;
-    text-decoration: none;
-    padding: 15px 20px;
-    text-align: center;
-    transition: background-color 0.3s;
+    display: block; /* Блочное отображение для всего кликабельной области */
+    color: white; /* Белый цвет текста */
+    text-decoration: none; /* Убираем подчеркивание ссылок */
+    padding: 15px 20px; /* Внутренние отступы для удобства клика */
+    text-align: center; /* Выравнивание текста по центру */
+    transition: background-color 0.3s; /* Плавный переход цвета фона */
 }
 
+/* Эффект при наведении на пункт меню */
 .menu a:hover {
-    background-color: #2c3e50;
+    background-color: #2c3e50; /* Темнее основной фон при наведении */
 }
 
+/* Стиль для активной (текущей) страницы */
 .menu a.active {
-    background-color: #e74c3c;
-    font-weight: bold;
+    background-color: #e74c3c; /* Красный фон для активной страницы */
+    font-weight: bold; /* Жирный шрифт для выделения */
 }
 
-/* Стили для основного контента */
+/* ===== СТИЛИ ДЛЯ ОСНОВНОГО КОНТЕНТА ===== */
 main {
-    padding: 40px 0;
+    padding: 40px 0; /* Большие вертикальные отступы для разделения контента */
 }
 
+/* Общие стили для секций контента */
 section {
-    margin-bottom: 40px;
-    padding: 20px;
-    background-color: white;
-    border-radius: 5px;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    margin-bottom: 40px; /* Отступ между секциями */
+    padding: 20px; /* Внутренние отступы */
+    background-color: white; /* Белый фон секций */
+    border-radius: 5px; /* Скругленные углы */
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1); /* Легкая тень для объема */
 }
 
+/* Стили для заголовков второго уровня */
 h2 {
-    color: #2c3e50;
-    margin-bottom: 20px;
-    padding-bottom: 10px;
-    border-bottom: 2px solid #ecf0f1;
+    color: #2c3e50; /* Темно-синий цвет */
+    margin-bottom: 20px; /* Отступ снизу */
+    padding-bottom: 10px; /* Отступ снизу для линии */
+    border-bottom: 2px solid #ecf0f1; /* Серая линия под заголовком */
 }
 
-/* Стили для карточек врачей */
+/* ===== СТИЛИ ДЛЯ КАРТОЧЕК ВРАЧЕЙ (страница "О больнице") ===== */
 .doctor-card {
-    background-color: #f8f9fa;
-    padding: 15px;
-    margin-bottom: 15px;
-    border-radius: 5px;
-    border-left: 4px solid #3498db;
+    background-color: #f8f9fa; /* Светло-серый фон */
+    padding: 15px; /* Внутренние отступы */
+    margin-bottom: 15px; /* Отступ между карточками */
+    border-radius: 5px; /* Скругленные углы */
+    border-left: 4px solid #3498db; /* Синяя акцентная линия слева */
 }
 
 .doctor-card h3 {
-    color: #2c3e50;
+    color: #2c3e50; /* Темно-синий цвет для имен врачей */
 }
 
-/* Стили для списка услуг */
+/* ===== СТИЛИ ДЛЯ СПИСКА УСЛУГ (страница "Услуги") ===== */
 .service-item {
-    background-color: #f8f9fa;
-    padding: 15px;
-    margin-bottom: 15px;
-    border-radius: 5px;
-    border-left: 4px solid #e74c3c;
-    transition: transform 0.3s;
+    background-color: #f8f9fa; /* Светло-серый фон */
+    padding: 15px; /* Внутренние отступы */
+    margin-bottom: 15px; /* Отступ между услугами */
+    border-radius: 5px; /* Скругленные углы */
+    border-left: 4px solid #e74c3c; /* Красная акцентная линия слева */
+    transition: transform 0.3s; /* Плавная анимация трансформации */
 }
 
+/* Эффект при наведении на услугу */
 .service-item:hover {
-    transform: translateX(5px);
+    transform: translateX(5px); /* Сдвиг вправо при наведении */
 }
 
 .service-item h3 {
-    color: #2c3e50;
+    color: #2c3e50; /* Темно-синий цвет для названий услуг */
 }
 
-/* Стили для таблицы цен */
+/* ===== СТИЛИ ДЛЯ ТАБЛИЦЫ ЦЕН (страница "Услуги") ===== */
 table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 20px;
+    width: 100%; /* Таблица на всю ширину контейнера */
+    border-collapse: collapse; /* Убираем двойные границы между ячейками */
+    margin-top: 20px; /* Отступ сверху от заголовка */
 }
 
+/* Ячейки таблицы */
 table th, table td {
-    padding: 12px 15px;
-    text-align: left;
-    border-bottom: 1px solid #ddd;
+    padding: 12px 15px; /* Внутренние отступы в ячейках */
+    text-align: left; /* Выравнивание текста по левому краю */
+    border-bottom: 1px solid #ddd; /* Линия между строками */
 }
 
+/* Заголовки столбцов таблицы */
 table th {
-    background-color: #34495e;
-    color: white;
+    background-color: #34495e; /* Темно-синий фон */
+    color: white; /* Белый текст */
 }
 
+/* Чередование цвета строк для лучшей читаемости */
 table tr:nth-child(even) {
-    background-color: #f2f2f2;
+    background-color: #f2f2f2; /* Светло-серый фон для четных строк */
 }
 
+/* Эффект при наведении на строку таблицы */
 table tr:hover {
-    background-color: #e9f7fe;
+    background-color: #e9f7fe; /* Голубой фон при наведении */
 }
 
-/* Стили для формы */
+/* ===== СТИЛИ ДЛЯ ФОРМЫ (страница "Добавить данные осмотра") ===== */
+
+/* Группа полей формы */
 .form-group {
-    margin-bottom: 20px;
+    margin-bottom: 20px; /* Отступ между группами полей */
 }
 
+/* Метки полей формы */
 label {
-    display: block;
-    margin-bottom: 5px;
-    font-weight: bold;
-    color: #2c3e50;
+    display: block; /* Блочное отображение для занятия всей ширины */
+    margin-bottom: 5px; /* Отступ снизу */
+    font-weight: bold; /* Жирный шрифт для выделения */
+    color: #2c3e50; /* Темно-синий цвет */
 }
 
+/* Общие стили для полей ввода */
 input[type="text"],
 input[type="number"],
 input[type="date"],
 select,
 textarea {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    font-size: 1rem;
+    width: 100%; /* Поля на всю ширину контейнера */
+    padding: 10px; /* Внутренние отступы для удобства ввода */
+    border: 1px solid #ddd; /* Серая граница */
+    border-radius: 4px; /* Скругленные углы */
+    font-size: 1rem; /* Размер шрифта как у основного текста */
 }
 
+/* Стили для активного поля ввода (при фокусе) */
 input:focus,
 select:focus,
 textarea:focus {
-    outline: none;
-    border-color: #3498db;
-    box-shadow: 0 0 5px rgba(52, 152, 219, 0.5);
+    outline: none; /* Убираем стандартное браузерное выделение */
+    border-color: #3498db; /* Синяя граница при фокусе */
+    box-shadow: 0 0 5px rgba(52, 152, 219, 0.5); /* Синее свечение */
 }
 
+/* Контейнер для группы чекбоксов */
 .checkbox-group {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 15px;
-    margin-top: 10px;
+    display: flex; /* Flexbox для горизонтального расположения */
+    flex-wrap: wrap; /* Перенос на новую строку при нехватке места */
+    gap: 15px; /* Расстояние между чекбоксами */
+    margin-top: 10px; /* Отступ сверху от метки */
 }
 
+/* Метки для чекбоксов */
 .checkbox-group label {
-    display: flex;
-    align-items: center;
-    font-weight: normal;
-    cursor: pointer;
+    display: flex; /* Flexbox для выравнивания */
+    align-items: center; /* Вертикальное выравнивание по центру */
+    font-weight: normal; /* Обычный шрифт (не жирный) */
+    cursor: pointer; /* Курсор-указатель при наведении */
 }
 
+/* Стили для самих чекбоксов */
 .checkbox-group input[type="checkbox"] {
-    width: auto;
-    margin-right: 5px;
+    width: auto; /* Автоматическая ширина (не на всю ширину) */
+    margin-right: 5px; /* Отступ справа от чекбокса */
 }
 
+/* Кнопка отправки формы */
 .submit-btn {
-    background-color: #e74c3c;
-    color: white;
-    border: none;
-    padding: 12px 25px;
-    font-size: 1rem;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: background-color 0.3s;
+    background-color: #e74c3c; /* Красный фон */
+    color: white; /* Белый текст */
+    border: none; /* Без границы */
+    padding: 12px 25px; /* Внутренние отступы */
+    font-size: 1rem; /* Размер шрифта */
+    border-radius: 4px; /* Скругленные углы */
+    cursor: pointer; /* Курсор-указатель */
+    transition: background-color 0.3s; /* Плавное изменение цвета фона */
 }
 
+/* Эффект при наведении на кнопку */
 .submit-btn:hover {
-    background-color: #c0392b;
+    background-color: #c0392b; /* Темнее красный при наведении */
 }
 
-/* Стили для подвала */
+/* ===== СТИЛИ ДЛЯ ПОДВАЛА САЙТА ===== */
 footer {
-    background-color: #34495e;
-    color: white;
-    text-align: center;
-    padding: 20px 0;
+    background-color: #34495e; /* Темно-синий фон как у меню */
+    color: white; /* Белый текст */
+    text-align: center; /* Выравнивание по центру */
+    padding: 20px 0; /* Вертикальные отступы */
 }
 
-/* Адаптивность */
+/* ===== АДАПТИВНОСТЬ ДЛЯ МОБИЛЬНЫХ УСТРОЙСТВ ===== */
 @media (max-width: 768px) {
+    /* Вертикальное меню на мобильных */
     .menu {
         flex-direction: column;
     }
     
+    /* Уменьшение размера заголовка на мобильных */
     #logo h1 {
         font-size: 2rem;
     }
     
+    /* Вертикальное расположение чекбоксов на мобильных */
     .checkbox-group {
         flex-direction: column;
-        gap: 10px;
+        gap: 10px; /* Уменьшение расстояния между чекбоксами */
     }
 }
