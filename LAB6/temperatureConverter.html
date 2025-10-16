@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Конвертер температур</title>
+    <style>
+        /* ОСНОВНЫЕ СТИЛИ СТРАНИЦЫ */
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        
+        /* КОНТЕЙНЕР ФОРМЫ */
+        .container {
+            background-color: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        /* ЗАГОЛОВОК */
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        /* ГРУППА ЭЛЕМЕНТОВ ФОРМЫ */
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        /* МЕТКИ (LABELS) */
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: #34495e;
+        }
+        
+        /* ПОЛЯ ВВОДА */
+        input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 16px;
+            box-sizing: border-box;
+        }
+        
+        /* СТИЛИ ДЛЯ АКТИВНОГО ПОЛЯ ВВОДА */
+        input:focus {
+            border-color: #3498db;
+            outline: none;
+            box-shadow: 0 0 5px rgba(52, 152, 219, 0.5);
+        }
+        
+        /* БЛОК С РЕЗУЛЬТАТОМ */
+        .result {
+            background-color: #f8f9fa;
+            padding: 15px;
+            border-radius: 4px;
+            margin-top: 20px;
+            border-left: 4px solid #3498db;
+        }
+        
+        /* ОФОРМЛЕНИЕ ФОРМУЛЫ */
+        .formula {
+            font-size: 14px;
+            color: #7f8c8d;
+            margin-top: 10px;
+            text-align: center;
+        }
+        
+        /* СТИЛИ ДЛЯ СООБЩЕНИЙ ОБ ОШИБКАХ */
+        .error {
+            color: #e74c3c;
+            font-size: 14px;
+            margin-top: 5px;
+        }
+    </style>
+</head>
+<body>
+    <!-- ОСНОВНОЙ КОНТЕЙНЕР ПРИЛОЖЕНИЯ -->
+    <div class="container">
+        <h1>Конвертер температуры в Цельсиях в Фаренгейты</h1>
+        
+        <!-- ГРУППА ВВОДА ТЕМПЕРАТУРЫ В ЦЕЛЬСИЯХ -->
+        <div class="form-group">
+            <label for="celsius">Температура в Цельсиях:</label>
+            <input type="text" id="celsius" placeholder="Введите температуру в °C">
+            <!-- БЛОК ДЛЯ ВЫВОДА СООБЩЕНИЙ ОБ ОШИБКАХ -->
+            <div id="error-message" class="error"></div>
+        </div>
+        
+        <!-- БЛОК С РЕЗУЛЬТАТОМ ПРЕОБРАЗОВАНИЯ -->
+        <div class="result">
+            <label for="fahrenheit">Температура в Фаренгейтах:</label>
+            <input type="text" id="fahrenheit" readonly>
+        </div>
+        
+        <!-- ОТОБРАЖЕНИЕ ФОРМУЛЫ ПРЕОБРАЗОВАНИЯ -->
+        <div class="formula">
+            Формула преобразования: °F = (°C × 9/5) + 32
+        </div>
+    </div>
+
+    <script>
+        // ЖДЕМ ПОЛНОЙ ЗАГРУЗКИ DOM ДОКУМЕНТА
+        document.addEventListener('DOMContentLoaded', function() {
+            // ПОЛУЧАЕМ ССЫЛКИ НА ЭЛЕМЕНТЫ DOM
+            const celsiusInput = document.getElementById('celsius');
+            const fahrenheitInput = document.getElementById('fahrenheit');
+            const errorMessage = document.getElementById('error-message');
+            
+            // ОБРАБОТЧИК СОБЫТИЯ ПОТЕРИ ФОКУСА (BLUR)
+            celsiusInput.addEventListener('blur', function() {
+                // ПОЛУЧАЕМ И ОЧИЩАЕМ ВВЕДЕННОЕ ЗНАЧЕНИЕ
+                const celsiusValue = celsiusInput.value.trim();
+                
+                // ОЧИЩАЕМ ПРЕДЫДУЩИЕ СООБЩЕНИЯ И РЕЗУЛЬТАТ
+                errorMessage.textContent = '';
+                fahrenheitInput.value = '';
+                
+                // ПРОВЕРКА: ПУСТОЕ ЛИ ПОЛЕ ВВОДА
+                if (celsiusValue === '') {
+                    errorMessage.textContent = 'Пожалуйста, введите значение температуры';
+                    return; // ВЫХОДИМ ИЗ ФУНКЦИИ
+                }
+                
+                // ПРОВЕРКА: ЯВЛЯЕТСЯ ЛИ ВВЕДЕННОЕ ЗНАЧЕНИЕ ЧИСЛОМ
+                if (isNaN(celsiusValue)) {
+                    errorMessage.textContent = 'Пожалуйста, введите числовое значение';
+                    return; // ВЫХОДИМ ИЗ ФУНКЦИИ
+                }
+                
+                // ПРЕОБРАЗУЕМ СТРОКУ В ЧИСЛО С ПЛАВАЮЩЕЙ ТОЧКОЙ
+                const celsius = parseFloat(celsiusValue);
+                
+                // ВЫПОЛНЯЕМ ПРЕОБРАЗОВАНИЕ ТЕМПЕРАТУРЫ
+                // Формула: °F = (°C × 9/5) + 32
+                const fahrenheit = (celsius * 9/5) + 32;
+                
+                // ОТОБРАЖАЕМ РЕЗУЛЬТАТ С ДВУМЯ ЗНАКАМИ ПОСЛЕ ЗАПЯТОЙ
+                fahrenheitInput.value = fahrenheit.toFixed(2) + ' °F';
+            });
+        });
+    </script>
+</body>
+</html>
