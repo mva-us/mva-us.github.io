@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Лабораторная работа №8</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        h1, h2 {
+            color: #2c3e50;
+            text-align: center;
+        }
+        .tasks-container {
+            display: flex;
+            gap: 30px;
+            margin-top: 20px;
+        }
+        .task {
+            flex: 1;
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        .input-group {
+            margin-bottom: 10px;
+        }
+        .input-group label {
+            display: inline-block;
+            width: 100px;
+        }
+        .input-group input {
+            padding: 5px;
+            width: 200px;
+        }
+        button {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 10px;
+            width: 100%;
+        }
+        button:hover {
+            background-color: #2980b9;
+        }
+        .result {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 4px;
+            background-color: #f8f9fa;
+            min-height: 100px;
+        }
+        .component {
+            border: 1px solid #ddd;
+            padding: 15px;
+            margin-bottom: 15px;
+            border-radius: 4px;
+            background-color: #f9f9f9;
+        }
+        .component h3 {
+            margin-top: 0;
+            color: #2c3e50;
+        }
+        .component-property {
+            margin: 5px 0;
+        }
+        .date-info {
+            font-style: italic;
+            color: #7f8c8d;
+            margin-bottom: 10px;
+        }
+        .numbers-list {
+            font-family: monospace;
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+    <h1>Лабораторная работа №8</h1>
+    <h2>Применение объектов JavaScript при обработке Web-форм</h2>
+    
+    <div class="tasks-container">
+        <!-- Задание 1: Проверка арифметической прогрессии -->
+        <div class="task">
+            <h2>Задание 1: Проверка арифметической прогрессии</h2>
+            <p>Введите 10 вещественных чисел:</p>
+            
+            <form id="numbersForm">
+                <div class="input-group">
+                    <label for="num1">Число 1:</label>
+                    <input type="number" step="any" id="num1" required value="1">
+                </div>
+                <div class="input-group">
+                    <label for="num2">Число 2:</label>
+                    <input type="number" step="any" id="num2" required value="3">
+                </div>
+                <div class="input-group">
+                    <label for="num3">Число 3:</label>
+                    <input type="number" step="any" id="num3" required value="5">
+                </div>
+                <div class="input-group">
+                    <label for="num4">Число 4:</label>
+                    <input type="number" step="any" id="num4" required value="7">
+                </div>
+                <div class="input-group">
+                    <label for="num5">Число 5:</label>
+                    <input type="number" step="any" id="num5" required value="9">
+                </div>
+                <div class="input-group">
+                    <label for="num6">Число 6:</label>
+                    <input type="number" step="any" id="num6" required value="11">
+                </div>
+                <div class="input-group">
+                    <label for="num7">Число 7:</label>
+                    <input type="number" step="any" id="num7" required value="13">
+                </div>
+                <div class="input-group">
+                    <label for="num8">Число 8:</label>
+                    <input type="number" step="any" id="num8" required value="15">
+                </div>
+                <div class="input-group">
+                    <label for="num9">Число 9:</label>
+                    <input type="number" step="any" id="num9" required value="17">
+                </div>
+                <div class="input-group">
+                    <label for="num10">Число 10:</label>
+                    <input type="number" step="any" id="num10" required value="19">
+                </div>
+                
+                <button type="button" onclick="checkProgression()">Проверить прогрессию</button>
+            </form>
+            
+            <div id="result" class="result">
+                <p>Введите числа и нажмите кнопку для проверки</p>
+            </div>
+        </div>
+        
+        <!-- Задание 2: Пользовательский объект -->
+        <div class="task">
+            <h2>Задание 2: Пользовательский объект "Комплектующее устройство"</h2>
+            <div id="componentsContainer"></div>
+        </div>
+    </div>
+
+    <script>
+        // Задание 1: Проверка арифметической прогрессии
+        function checkProgression() {
+            // Получаем значения из формы
+            const numbers = [
+                parseFloat(document.getElementById('num1').value),
+                parseFloat(document.getElementById('num2').value),
+                parseFloat(document.getElementById('num3').value),
+                parseFloat(document.getElementById('num4').value),
+                parseFloat(document.getElementById('num5').value),
+                parseFloat(document.getElementById('num6').value),
+                parseFloat(document.getElementById('num7').value),
+                parseFloat(document.getElementById('num8').value),
+                parseFloat(document.getElementById('num9').value),
+                parseFloat(document.getElementById('num10').value)
+            ];
+            
+            // Использование объекта Array
+            const arrayObj = new Array();
+            numbers.forEach(num => arrayObj.push(num));
+            
+            // Проверяем, является ли последовательность арифметической прогрессией
+            let isArithmeticProgression = true;
+            const difference = arrayObj[1] - arrayObj[0];
+            
+            for (let i = 1; i < arrayObj.length - 1; i++) {
+                if (Math.abs((arrayObj[i + 1] - arrayObj[i]) - difference) > 0.0001) {
+                    isArithmeticProgression = false;
+                    break;
+                }
+            }
+            
+            // Использование объекта Date
+            const dateObj = new Date();
+            const dateString = dateObj.toLocaleString('ru-RU');
+            
+            // Использование объекта String
+            const stringObj = new String();
+            let resultString = stringObj.concat(
+                "Дата и время проверки: ", dateString, "\n",
+                "Введенные числа: ", arrayObj.join(", "), "\n",
+                "Результат: ", isArithmeticProgression ? 
+                    "Последовательность является арифметической прогрессией" : 
+                    "Последовательность НЕ является арифметической прогрессией"
+            );
+            
+            // Форматируем результат для красивого отображения
+            const resultDiv = document.getElementById('result');
+            resultDiv.innerHTML = `
+                <div class="date-info">Дата и время проверки: ${dateString}</div>
+                <div class="numbers-list">Введенные числа: ${arrayObj.join(", ")}</div>
+                <div><strong>${isArithmeticProgression ? 
+                    "Последовательность является арифметической прогрессией" : 
+                    "Последовательность НЕ является арифметической прогрессией"}</strong></div>
+            `;
+            
+            // Добавляем цветовое выделение результата
+            if (isArithmeticProgression) {
+                resultDiv.style.backgroundColor = "#d4edda";
+                resultDiv.style.border = "1px solid #c3e6cb";
+            } else {
+                resultDiv.style.backgroundColor = "#f8d7da";
+                resultDiv.style.border = "1px solid #f5c6cb";
+            }
+        }
+        
+        // Задание 2: Пользовательский объект "Комплектующее устройство"
+        // Конструктор объекта
+        function ComputerComponent(name, type, price, manufacturer) {
+            // Свойства объекта
+            this.name = name;
+            this.type = type;
+            this.price = price;
+            this.manufacturer = manufacturer;
+            
+            // Методы объекта
+            this.getInfo = function() {
+                return `${this.name} (${this.type}) - ${this.price} руб.`;
+            };
+            
+            this.getManufacturerInfo = function() {
+                return `Производитель: ${this.manufacturer}`;
+            };
+            
+            this.calculateDiscount = function(discountPercent) {
+                const discount = this.price * discountPercent / 100;
+                return this.price - discount;
+            };
+            
+            this.getFullInfo = function() {
+                return `${this.getInfo()}<br>${this.getManufacturerInfo()}<br>Цена со скидкой 10%: ${this.calculateDiscount(10)} руб.`;
+            };
+        }
+        
+        // Создание экземпляров объекта
+        const components = [
+            new ComputerComponent("Intel Core i7-10700K", "Процессор", 28000, "Intel"),
+            new ComputerComponent("NVIDIA GeForce RTX 3080", "Видеокарта", 85000, "NVIDIA"),
+            new ComputerComponent("Samsung 970 EVO Plus 1TB", "SSD накопитель", 15000, "Samsung"),
+            new ComputerComponent("Corsair Vengeance LPX 16GB", "Оперативная память", 8000, "Corsair"),
+            new ComputerComponent("ASUS ROG Strix Z490-E", "Материнская плата", 22000, "ASUS"),
+            new ComputerComponent("Seasonic Focus Plus 750W", "Блок питания", 12000, "Seasonic"),
+            new ComputerComponent("Cooler Master MasterBox TD500", "Корпус", 7000, "Cooler Master")
+        ];
+        
+        // Вывод информации о компонентах на страницу
+        const componentsContainer = document.getElementById('componentsContainer');
+        
+        components.forEach((component, index) => {
+            const componentDiv = document.createElement('div');
+            componentDiv.className = 'component';
+            componentDiv.innerHTML = `
+                <h3>Комплектующее устройство #${index + 1}</h3>
+                <div class="component-property">${component.getFullInfo()}</div>
+            `;
+            componentsContainer.appendChild(componentDiv);
+        });
+        
+        // Автоматически проверяем прогрессию при загрузке страницы
+        window.onload = function() {
+            checkProgression();
+        };
+    </script>
+</body>
+</html>
