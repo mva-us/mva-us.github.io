@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Регистрация - Лабораторная работа №9</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            background-color: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: #555;
+        }
+        input[type="text"],
+        input[type="email"],
+        input[type="tel"] {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+            font-size: 16px;
+        }
+        input:focus {
+            border-color: #4d90fe;
+            outline: none;
+            box-shadow: 0 0 5px rgba(77, 144, 254, 0.5);
+        }
+        .error {
+            color: #d93025;
+            font-size: 14px;
+            margin-top: 5px;
+            display: none;
+        }
+        button {
+            background-color: #4d90fe;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            width: 100%;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #357ae8;
+        }
+        .success-message {
+            color: #0f9d58;
+            text-align: center;
+            margin-top: 20px;
+            display: none;
+        }
+        .phone-format {
+            font-size: 12px;
+            color: #666;
+            margin-top: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Форма регистрации</h1>
+        <form id="registrationForm" onSubmit="CheckData(); return false;">
+            <div class="form-group">
+                <label for="uname">Имя пользователя *</label>
+                <input type="text" id="uname" name="uname">
+                <div class="error" id="unameError">Поле обязательно для заполнения</div>
+            </div>
+            
+            <div class="form-group">
+                <label for="email">Email *</label>
+                <input type="email" id="email" name="email">
+                <div class="error" id="emailError">Введите корректный email адрес</div>
+            </div>
+            
+            <div class="form-group">
+                <label for="phone">Номер телефона *</label>
+                <input type="tel" id="phone" name="phone" placeholder="+7(XXX)XXX-XX-XX">
+                <div class="phone-format">Формат: +7(XXX)XXX-XX-XX</div>
+                <div class="error" id="phoneError">Введите номер телефона в формате: +7(XXX)XXX-XX-XX</div>
+            </div>
+            
+            <button type="submit">Зарегистрироваться</button>
+        </form>
+        
+        <div class="success-message" id="successMessage">
+            Данные успешно отправлены!
+        </div>
+    </div>
+
+    <script>
+        // Автоматическое форматирование номера телефона
+        document.getElementById('phone').addEventListener('input', function(e) {
+            let x = e.target.value.replace(/\D/g, '').match(/(\d{0,1})(\d{0,3})(\d{0,3})(\d{0,2})(\d{0,2})/);
+            
+            // Если пользователь начинает ввод с 8, заменяем на +7
+            if (x[1] === '8' && x[2] === '') {
+                x[1] = '7';
+            }
+            
+            // Форматируем номер
+            let formattedValue = '';
+            if (x[1]) {
+                formattedValue = '+' + x[1];
+                if (x[2]) {
+                    formattedValue += '(' + x[2];
+                    if (x[3]) {
+                        formattedValue += ')' + x[3];
+                        if (x[4]) {
+                            formattedValue += '-' + x[4];
+                            if (x[5]) {
+                                formattedValue += '-' + x[5];
+                            }
+                        }
+                    }
+                }
+            }
+            
+            e.target.value = formattedValue;
+            
+            // Скрываем ошибку при вводе
+            document.getElementById("phoneError").style.display = "none";
+        });
+
+        function CheckData() {
+            // Сброс сообщений об ошибках
+            resetErrors();
+            
+            // Получение значений полей
+            var uname = document.getElementById("uname").value;
+            var email = document.getElementById("email").value;
+            var phone = document.getElementById("phone").value;
+            
+            // Проверка заполнения обязательных полей
+            if (uname.length === 0) {
+                showError("unameError");
+                return false;
+            }
+            
+            if (email.length === 0) {
+                showError("emailError");
+                return false;
+            }
+            
+            if (phone.length === 0) {
+                showError("phoneError");
+                return false;
+            }
+            
+            // Проверка email с помощью регулярного выражения
+            var validEMail, emailPattern;
+            emailPattern = new RegExp("^[\\.\\-_A-Za-z0-9]+?@[\\.\\-A-Za-z0-9]+?\\.[A-Za-z0-9]{2,6}$");
+            validEMail = emailPattern.test(email);
+            
+            if (!validEMail) {
+                showError("emailError");
+                return false;
+            }
+            
+            // Проверка номера телефона с помощью регулярного выражения
+            var validPhone, phonePattern;
+            // Регулярное выражение для российского номера телефона в формате +7(XXX)XXX-XX-XX
+            phonePattern = new RegExp("^\\+7\\(\\d{3}\\)\\d{3}-\\d{2}-\\d{2}$");
+            validPhone = phonePattern.test(phone);
+            
+            if (!validPhone) {
+                showError("phoneError");
+                return false;
+            }
+            
+            // Если все проверки пройдены, запросить подтверждение
+            var ans = confirm("Вы уверены, что хотите отправить введенные данные?");
+            if (ans) {
+                // В реальном приложении здесь был бы вызов submit()
+                // Для демонстрации просто покажем сообщение об успехе
+                document.getElementById("successMessage").style.display = "block";
+                
+                // В реальном приложении:
+                // document.getElementById("registrationForm").submit();
+            }
+        }
+        
+        function showError(errorId) {
+            document.getElementById(errorId).style.display = "block";
+        }
+        
+        function resetErrors() {
+            var errors = document.getElementsByClassName("error");
+            for (var i = 0; i < errors.length; i++) {
+                errors[i].style.display = "none";
+            }
+            document.getElementById("successMessage").style.display = "none";
+        }
+        
+        // Добавляем обработчики событий для скрытия ошибок при вводе
+        document.getElementById("uname").addEventListener("input", function() {
+            document.getElementById("unameError").style.display = "none";
+        });
+        
+        document.getElementById("email").addEventListener("input", function() {
+            document.getElementById("emailError").style.display = "none";
+        });
+    </script>
+</body>
+</html>
