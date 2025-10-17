@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Лабораторная работа №7</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        h1, h2 {
+            color: #333;
+            text-align: center;
+        }
+        .tasks-container {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        .task {
+            flex: 1;
+            min-width: 300px;
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .input-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        input {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 10px;
+            width: 100%;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .result {
+            margin-top: 15px;
+            padding: 10px;
+            background-color: #e9f7e9;
+            border-radius: 4px;
+            display: none;
+        }
+        .explanation {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #f0f8ff;
+            border-radius: 4px;
+            border-left: 4px solid #4CAF50;
+        }
+        .step {
+            margin-bottom: 10px;
+        }
+        @media (max-width: 768px) {
+            .tasks-container {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>Лабораторная работа №7</h1>
+    <h2>Обработка данных Web-форм с помощью алгоритмических конструкций JavaScript</h2>
+
+    <div class="tasks-container">
+        <!-- Задание 1: Смена знака в последовательности -->
+        <div class="task">
+            <h2>Задание 1: Определение смены знака в последовательности</h2>
+            <p>Введите 6 вещественных чисел:</p>
+            <div class="input-group">
+                <label for="num1">Число 1:</label>
+                <input type="number" id="num1" step="any" required>
+            </div>
+            <div class="input-group">
+                <label for="num2">Число 2:</label>
+                <input type="number" id="num2" step="any" required>
+            </div>
+            <div class="input-group">
+                <label for="num3">Число 3:</label>
+                <input type="number" id="num3" step="any" required>
+            </div>
+            <div class="input-group">
+                <label for="num4">Число 4:</label>
+                <input type="number" id="num4" step="any" required>
+            </div>
+            <div class="input-group">
+                <label for="num5">Число 5:</label>
+                <input type="number" id="num5" step="any" required>
+            </div>
+            <div class="input-group">
+                <label for="num6">Число 6:</label>
+                <input type="number" id="num6" step="any" required>
+            </div>
+            <button onclick="calculateSignChanges()">Определить количество смен знака</button>
+            <div id="result1" class="result"></div>
+            
+            <div class="explanation">
+                <h3>Алгоритм определения смены знака:</h3>
+                <div class="step">1. Получаем 6 чисел из формы</div>
+                <div class="step">2. Сохраняем их в массив</div>
+                <div class="step">3. Проходим по массиву циклом for, начиная со второго элемента</div>
+                <div class="step">4. Сравниваем знак текущего элемента с предыдущим</div>
+                <div class="step">5. Если знаки разные (и оба не равны нулю) - увеличиваем счетчик</div>
+                <div class="step">6. Выводим результат</div>
+            </div>
+        </div>
+
+        <!-- Задание 2: Переворот натурального числа -->
+        <div class="task">
+            <h2>Задание 2: Переворот натурального числа</h2>
+            <div class="input-group">
+                <label for="naturalNumber">Натуральное число:</label>
+                <input type="number" id="naturalNumber" min="1" step="1" required>
+            </div>
+            <button onclick="reverseNumber()">Перевернуть число</button>
+            <div id="result2" class="result"></div>
+            
+            <div class="explanation">
+                <h3>Алгоритм переворота числа:</h3>
+                <div class="step">1. Получаем натуральное число из формы</div>
+                <div class="step">2. Проверяем, что число натуральное (целое, положительное)</div>
+                <div class="step">3. Используем цикл while для обработки числа</div>
+                <div class="step">4. На каждой итерации:</div>
+                <div class="step">   - Получаем последнюю цифру (остаток от деления на 10)</div>
+                <div class="step">   - Добавляем её к перевернутому числу</div>
+                <div class="step">   - Удаляем последнюю цифру из исходного числа</div>
+                <div class="step">5. Выводим результат</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Задание 1: Определение количества смен знака в последовательности
+        function calculateSignChanges() {
+            // Получаем значения из полей ввода
+            const num1 = parseFloat(document.getElementById('num1').value);
+            const num2 = parseFloat(document.getElementById('num2').value);
+            const num3 = parseFloat(document.getElementById('num3').value);
+            const num4 = parseFloat(document.getElementById('num4').value);
+            const num5 = parseFloat(document.getElementById('num5').value);
+            const num6 = parseFloat(document.getElementById('num6').value);
+            
+            // Сохраняем числа в массиве
+            const numbers = [num1, num2, num3, num4, num5, num6];
+            
+            // Инициализируем счетчик смен знака
+            let signChangeCount = 0;
+            
+            // Проходим по массиву, начиная со второго элемента
+            for (let i = 1; i < numbers.length; i++) {
+                // Сравниваем знак текущего числа с предыдущим
+                if ((numbers[i] > 0 && numbers[i-1] < 0) || 
+                    (numbers[i] < 0 && numbers[i-1] > 0)) {
+                    signChangeCount++;
+                }
+            }
+            
+            // Выводим результат
+            const resultElement = document.getElementById('result1');
+            resultElement.textContent = `Количество смен знака в последовательности: ${signChangeCount}`;
+            resultElement.style.display = 'block';
+        }
+        
+        // Задание 2: Переворот натурального числа
+        function reverseNumber() {
+            // Получаем значение из поля ввода
+            let number = parseInt(document.getElementById('naturalNumber').value);
+            
+            // Проверяем, что число натуральное
+            if (number <= 0 || !Number.isInteger(number)) {
+                alert('Введите натуральное число (целое положительное число)');
+                return;
+            }
+            
+            // Сохраняем исходное число для отображения
+            const originalNumber = number;
+            
+            // Инициализируем переменную для перевернутого числа
+            let reversedNumber = 0;
+            
+            // Используем цикл while для переворота числа
+            while (number > 0) {
+                // Получаем последнюю цифру числа
+                const lastDigit = number % 10;
+                
+                // Добавляем эту цифру к перевернутому числу
+                reversedNumber = reversedNumber * 10 + lastDigit;
+                
+                // Удаляем последнюю цифру из исходного числа
+                number = Math.floor(number / 10);
+            }
+            
+            // Выводим результат
+            const resultElement = document.getElementById('result2');
+            resultElement.textContent = `Исходное число: ${originalNumber}, перевернутое число: ${reversedNumber}`;
+            resultElement.style.display = 'block';
+        }
+    </script>
+</body>
+</html>
