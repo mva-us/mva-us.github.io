@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Лабораторная работа №10 - PHP и JavaScript</title>
+    <style>
+        :root {
+            --primary-color: #4a6fa5;
+            --secondary-color: #6b8cbc;
+            --accent-color: #ff6b6b;
+            --light-color: #f8f9fa;
+            --dark-color: #343a40;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f7fa;
+            line-height: 1.6;
+            color: #333;
+        }
+        
+        header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        
+        h1, h2, h3 {
+            margin-top: 0;
+        }
+        
+        .task-container {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .task {
+            flex: 1;
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+        }
+        
+        .code-viewer {
+            flex: 1;
+            background-color: #1e1e1e;
+            color: #d4d4d4;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+            font-family: 'Consolas', 'Courier New', monospace;
+            font-size: 14px;
+            line-height: 1.5;
+            overflow: auto;
+            max-height: 600px;
+        }
+        
+        .tab-container {
+            margin-bottom: 15px;
+        }
+        
+        .tabs {
+            display: flex;
+            border-bottom: 1px solid #ddd;
+            margin-bottom: 15px;
+        }
+        
+        .tab {
+            padding: 10px 20px;
+            cursor: pointer;
+            border: 1px solid transparent;
+            border-bottom: none;
+            border-radius: 5px 5px 0 0;
+            margin-right: 5px;
+            background-color: #f1f1f1;
+        }
+        
+        .tab.active {
+            background-color: white;
+            border-color: #ddd;
+            border-bottom: 1px solid white;
+            margin-bottom: -1px;
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+        
+        .tab-content {
+            display: none;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        form {
+            margin-bottom: 15px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: var(--dark-color);
+        }
+        
+        select, textarea, input[type="number"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+            font-family: inherit;
+        }
+        
+        button {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-right: 10px;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+        
+        button:hover {
+            background-color: var(--secondary-color);
+        }
+        
+        button.reset {
+            background-color: #6c757d;
+        }
+        
+        button.reset:hover {
+            background-color: #5a6268;
+        }
+        
+        .result {
+            margin-top: 15px;
+            padding: 15px;
+            background-color: #e9f7ef;
+            border-radius: 4px;
+            border-left: 4px solid #28a745;
+        }
+        
+        .result.error {
+            background-color: #ffe6e6;
+            border-left-color: #dc3545;
+        }
+        
+        .greeting {
+            margin: 8px 0;
+            padding: 8px;
+            background-color: #e6f3ff;
+            border-radius: 4px;
+            border-left: 3px solid #17a2b8;
+        }
+        
+        .php-keyword {
+            color: #569cd6;
+        }
+        
+        .php-variable {
+            color: #9cdcfe;
+        }
+        
+        .php-string {
+            color: #ce9178;
+        }
+        
+        .php-comment {
+            color: #6a9955;
+        }
+        
+        .php-html {
+            color: #808080;
+        }
+        
+        .code-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #444;
+        }
+        
+        .copy-btn {
+            background-color: #444;
+            padding: 5px 10px;
+            font-size: 12px;
+        }
+        
+        .explanation {
+            background-color: #e8f4f8;
+            border-radius: 8px;
+            padding: 20px;
+            margin-top: 30px;
+        }
+        
+        @media (max-width: 768px) {
+            .task-container {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Лабораторная работа №10</h1>
+        <p>Применение алгоритмических конструкций при создании сценариев формирования Web-страниц</p>
+        <p><strong>Эмуляция PHP на JavaScript с просмотром PHP-кода</strong></p>
+    </header>
+    
+    <div class="task-container">
+        <div class="task">
+            <h2>Задание №1: Информация о членах группы</h2>
+            <div class="tab-container">
+                <div class="tabs">
+                    <div class="tab active" onclick="switchTab('task1', 'demo')">Демонстрация</div>
+                    <div class="tab" onclick="switchTab('task1', 'php-code')">PHP код</div>
+                </div>
+                
+                <div id="task1-demo" class="tab-content active">
+                    <p>Создать форму с выбором фамилии и выводом информации о выбранном человеке.</p>
+                    
+                    <form id="form1">
+                        <label for="surname">Выберите фамилию члена группы:</label>
+                        <select id="surname" name="surname">
+                            <option value="">-- Выберите фамилию --</option>
+                            <option value="Иванов">Иванов</option>
+                            <option value="Петров">Петров</option>
+                            <option value="Сидоров">Сидоров</option>
+                            <option value="Козлов">Козлов</option>
+                            <option value="Смирнов">Смирнов</option>
+                        </select>
+                        
+                        <label for="info">Информация о выбранном человеке:</label>
+                        <textarea id="info" name="info" rows="4" readonly></textarea>
+                        
+                        <button type="button" onclick="processForm1()">Подтвердить ввод</button>
+                        <button type="button" class="reset" onclick="resetForm1()">Сбросить форму</button>
+                    </form>
+                    
+                    <div id="form1-result"></div>
+                </div>
+                
+                <div id="task1-php-code" class="tab-content">
+                    <div class="code-header">
+                        <h3>Код для задания №1 (PHP)</h3>
+                        <button class="copy-btn" onclick="copyCode('php-code-1')">Копировать код</button>
+                    </div>
+                    <pre id="php-code-1"><code>&lt;?php
+// Данные о членах группы
+$groupMembers = [
+    "Иванов" => [
+        "fullName" => "Иванов Иван Иванович",
+        "birthDate" => "15.03.2001",
+        "city" => "Сыктывкар",
+        "hobbies" => "программирование"
+    ],
+    "Петров" => [
+        "fullName" => "Петров Петр Петрович",
+        "birthDate" => "22.07.2000",
+        "city" => "Санкт-Петербург",
+        "hobbies" => "путешествия"
+    ],
+    "Сидоров" => [
+        "fullName" => "Сидоров Сидор Сидорович",
+        "birthDate" => "10.11.2002",
+        "city" => "Ухта",
+        "hobbies" => "спорт"
+    ],
+    "Козлов" => [
+        "fullName" => "Козлов Коземир Коземирович",
+        "birthDate" => "05.05.2001",
+        "city" => "Печора",
+        "hobbies" => "видеоигры"
+    ],
+    "Смирнов" => [
+        "fullName" => "Смирнов Семен Семенович",
+        "birthDate" => "18.09.2000",
+        "city" => "Мурманск",
+        "hobbies" => "единоборства"
+    ]
+];
+// Обработка формы
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['surname'])) {
+    $surname = $_POST['surname'];
+     // Использование switch для определения информации
+    switch($surname) {
+        case "Иванов":
+            $memberInfo = formatMemberInfo($groupMembers["Иванов"]);
+            break;
+        case "Петров":
+            $memberInfo = formatMemberInfo($groupMembers["Петров"]);
+            break;
+        case "Сидоров":
+            $memberInfo = formatMemberInfo($groupMembers["Сидоров"]);
+            break;
+        case "Козлов":
+            $memberInfo = formatMemberInfo($groupMembers["Козлов"]);
+            break;
+        case "Смирнов":
+            $memberInfo = formatMemberInfo($groupMembers["Смирнов"]);
+            break;
+        default:
+            $memberInfo = "Информация о выбранном человеке отсутствует";
+    }
+    // Вывод информации
+    echo "&lt;div class='result'&gt;";
+    echo "&lt;h3&gt;Информация о $surname:&lt;/h3&gt;";
+    echo "&lt;pre&gt;" . htmlspecialchars($memberInfo) . "&lt;/pre&gt;";
+    echo "&lt;/div&gt;";
+}
+// Функция для форматирования информации
+function formatMemberInfo($member) {
+    return $member["fullName"] . "\n" .
+           "Дата рождения: " . $member["birthDate"] . "\n" .
+           "Родной город: " . $member["city"] . "\n" .
+           "Увлечения: " . $member["hobbies"];
+}
+?&gt;
+&lt;!-- HTML форма --&gt;
+&lt;form method="POST"&gt;
+    &lt;label for="surname"&gt;Выберите фамилию члена группы:&lt;/label&gt;
+    &lt;select id="surname" name="surname"&gt;
+        &lt;option value=""&gt;-- Выберите фамилию --&lt;/option&gt;
+        &lt;option value="Иванов"&gt;Иванов&lt;/option&gt;
+        &lt;option value="Петров"&gt;Петров&lt;/option&gt;
+        &lt;option value="Сидоров"&gt;Сидоров&lt;/option&gt;
+        &lt;option value="Козлов"&gt;Козлов&lt;/option&gt;
+        &lt;option value="Смирнов"&gt;Смирнов&lt;/option&gt;
+    &lt;/select&gt;
+    &lt;button type="submit"&gt;Подтвердить ввод&lt;/button&gt;
+    &lt;button type="reset"&gt;Сбросить форму&lt;/button&gt;
+&lt;/form&gt;</code></pre>
+                </div>
+            </div>
+        </div>
+        <div class="task">
+            <h2>Задание №2: Повторение фразы "Привет"</h2>
+            <div class="tab-container">
+                <div class="tabs">
+                    <div class="tab active" onclick="switchTab('task2', 'demo')">Демонстрация</div>
+                    <div class="tab" onclick="switchTab('task2', 'php-code')">PHP код</div>
+                </div>
+                
+                <div id="task2-demo" class="tab-content active">
+                    <p>Вывести фразу "Привет" указанное количество раз.</p>
+                    
+                    <form id="form2">
+                        <label for="repeat_count">Введите количество повторений (1-50):</label>
+                        <input type="number" id="repeat_count" name="repeat_count" min="1" max="50" value="5">
+                        
+                        <button type="button" onclick="processForm2()">Вывести приветствия</button>
+                    </form>
+                    
+                    <div id="form2-result"></div>
+                </div>
+                
+                <div id="task2-php-code" class="tab-content">
+                    <div class="code-header">
+                        <h3>Код для задания №2 (PHP)</h3>
+                        <button class="copy-btn" onclick="copyCode('php-code-2')">Копировать код</button>
+                    </div>
+                    <pre id="php-code-2"><code>&lt;?php
+// Обработка формы
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['repeat_count'])) {
+    $count = (int)$_POST['repeat_count'];
+    // Валидация ввода
+    if ($count &lt; 1 || $count &gt; 50) {
+        echo "&lt;div class='result error'&gt;";
+        echo "Введите число от 1 до 50";
+        echo "&lt;/div&gt;";
+    } else {
+        // Использование цикла for для повторения фразы
+        echo "&lt;div class='result'&gt;";
+        echo "&lt;h3&gt;Результат ($count повторений):&lt;/h3&gt;";
+        
+        for ($i = 1; $i &lt;= $count; $i++) {
+            echo "&lt;div class='greeting'&gt;$i. Привет!&lt;/div&gt;";
+        }
+        echo "&lt;/div&gt;";
+    }
+}
+?&gt;
+&lt;!-- HTML форма --&gt;
+&lt;form method="POST"&gt;
+    &lt;label for="repeat_count"&gt;Введите количество повторений:&lt;/label&gt;
+    &lt;input type="number" id="repeat_count" name="repeat_count" min="1" max="50" value="5"&gt;
+    &lt;button type="submit"&gt;Вывести приветствия&lt;/button&gt;
+&lt;/form&gt;</code></pre>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="explanation">
+        <h3>Пояснения к реализации</h3>
+        <p><strong>Особенности данной реализации:</strong></p>
+        <ul>
+            <li>Интерфейс разделен на две части: выполнение задания и просмотр PHP-кода</li>
+            <li>JavaScript эмулирует поведение PHP-скриптов для демонстрации на GitHub Pages</li>
+            <li>Реальный PHP-код представлен для ознакомления и может быть использован на сервере с поддержкой PHP</li>
+            <li>Все требуемые алгоритмические конструкции (if-else, switch, for) реализованы в обоих вариантах</li>
+        </ul>
+        <p><strong>Как использовать PHP-код:</strong></p>
+        <ol>
+            <li>Скопируйте код с помощью кнопки "Копировать код"</li>
+            <li>Сохраните его в файле с расширением .php (например, lab10.php)</li>
+            <li>Разместите файл на веб-сервере с поддержкой PHP</li>
+            <li>Откройте файл в браузере для проверки работы</li>
+        </ol>
+    </div>
+    <script>
+        // Данные для задания №1 - информация о членах группы
+        const groupMembers = {
+            "Иванов": {
+                fullName: "Иванов Иван Иванович",
+                birthDate: "15.03.2001",
+                city: "Сыктывкар",
+                hobbies: "программирование"
+            },
+            "Петров": {
+                fullName: "Петров Петр Петрович",
+                birthDate: "22.07.2000",
+                city: "Санкт-Петербург",
+                hobbies: "путешествия"
+            },
+            "Сидоров": {
+                fullName: "Сидоров Сидор Сидорович",
+                birthDate: "10.11.2002",
+                city: "Ухта",
+                hobbies: "спорт"
+            },
+            "Козлов": {
+                fullName: "Козлов Коземир Коземирович",
+                birthDate: "05.05.2001",
+                city: "Печора",
+                hobbies: "видеоигры"
+            },
+            "Смирнов": {
+                fullName: "Смирнов Семен Семенович",
+                birthDate: "18.09.2000",
+                city: "Мурманск",
+                hobbies: "единоборства"
+            }
+        };
+
+        // Функция для переключения вкладок
+        function switchTab(task, tab) {
+            // Скрыть все вкладки для этой задачи
+            const tabs = document.querySelectorAll(`#${task}-demo, #${task}-php-code`);
+            tabs.forEach(tabContent => {
+                tabContent.classList.remove('active');
+            });
+            
+            // Показать выбранную вкладку
+            document.getElementById(`${task}-${tab}`).classList.add('active');
+            
+            // Обновить активные табы
+            const tabElements = document.querySelectorAll(`.tab-container#${task} .tab`);
+            tabElements.forEach(tabElement => {
+                tabElement.classList.remove('active');
+            });
+            
+            event.target.classList.add('active');
+        }
+
+        // Функция для копирования кода
+        function copyCode(elementId) {
+            const codeElement = document.getElementById(elementId);
+            const range = document.createRange();
+            range.selectNode(codeElement);
+            window.getSelection().removeAllRanges();
+            window.getSelection().addRange(range);
+            
+            try {
+                const successful = document.execCommand('copy');
+                if (successful) {
+                    alert('Код скопирован в буфер обмена!');
+                }
+            } catch (err) {
+                console.error('Не удалось скопировать код: ', err);
+            }
+            
+            window.getSelection().removeAllRanges();
+        }
+
+        // Функция для обработки формы №1 - эмуляция PHP
+        function processForm1() {
+            const surname = document.getElementById('surname').value;
+            const infoTextarea = document.getElementById('info');
+            const resultDiv = document.getElementById('form1-result');
+            
+            // Эмуляция PHP: if-else и switch конструкции
+            if (!surname) {
+                infoTextarea.value = "Пожалуйста, выберите фамилию из списка";
+                resultDiv.innerHTML = '<div class="result error">Ошибка: не выбрана фамилия</div>';
+                return;
+            }
+            
+            // Эмуляция PHP: switch конструкция
+            let memberInfo = "";
+            switch(surname) {
+                case "Иванов":
+                    memberInfo = formatMemberInfo(groupMembers["Иванов"]);
+                    break;
+                case "Петров":
+                    memberInfo = formatMemberInfo(groupMembers["Петров"]);
+                    break;
+                case "Сидоров":
+                    memberInfo = formatMemberInfo(groupMembers["Сидоров"]);
+                    break;
+                case "Козлов":
+                    memberInfo = formatMemberInfo(groupMembers["Козлов"]);
+                    break;
+                case "Смирнов":
+                    memberInfo = formatMemberInfo(groupMembers["Смирнов"]);
+                    break;
+                default:
+                    memberInfo = "Информация о выбранном человеке отсутствует";
+            }
+            
+            infoTextarea.value = memberInfo;
+            
+            // Показать результат обработки
+            resultDiv.innerHTML = `
+                <div class="result">
+                    <h3>Результат обработки (эмуляция PHP):</h3>
+                    <p>Фамилия: <strong>${surname}</strong></p>
+                    <p>Форма обработана успешно с использованием конструкции <em>switch</em></p>
+                </div>
+            `;
+        }
+
+        // Вспомогательная функция для форматирования информации о члене группы
+        function formatMemberInfo(member) {
+            return `${member.fullName}\nДата рождения: ${member.birthDate}\nРодной город: ${member.city}\nУвлечения: ${member.hobbies}`;
+        }
+
+        // Функция для сброса формы №1
+        function resetForm1() {
+            document.getElementById('form1').reset();
+            document.getElementById('info').value = "";
+            document.getElementById('form1-result').innerHTML = "";
+        }
+
+        // Функция для обработки формы №2 - эмуляция PHP
+        function processForm2() {
+            const count = parseInt(document.getElementById('repeat_count').value);
+            const resultDiv = document.getElementById('form2-result');
+            
+            // Эмуляция PHP: валидация входных данных
+            if (isNaN(count) || count < 1 || count > 50) {
+                resultDiv.innerHTML = `
+                    <div class="result error">
+                        <p>Ошибка: введите число от 1 до 50</p>
+                        <p><em>(эмуляция PHP-валидации)</em></p>
+                    </div>
+                `;
+                return;
+            }
+            
+            // Эмуляция PHP: цикл for для повторения фразы
+            let greetingsHTML = `
+                <div class="result">
+                    <h3>Результат (эмуляция PHP for-цикла):</h3>
+                    <p>Количество повторений: <strong>${count}</strong></p>
+            `;
+            
+            for (let i = 1; i <= count; i++) {
+                greetingsHTML += `<div class="greeting">${i}. Привет!</div>`;
+            }
+            
+            greetingsHTML += `</div>`;
+            resultDiv.innerHTML = greetingsHTML;
+        }
+    </script>
+</body>
+</html>
