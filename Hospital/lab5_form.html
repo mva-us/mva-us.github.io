@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Лаб. работа №5 - Форма осмотра пациента</title>
+    <link rel="stylesheet" href="css/style_common.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div id="logo">
+                <h1>Городская больница №33</h1>
+                <p>Забота о вашем здоровье с 1968 года</p>
+            </div>
+        </div>
+    </header>
+    
+    <nav>
+        <div class="container">
+            <ul class="menu">
+                <li><a href="index.html">Главная</a></li>
+                <li><a href="about.html">О больнице</a></li>
+                <li><a href="services.html">Услуги</a></li>
+                <li><a href="patient.html">Добавить данные осмотра</a></li>
+                <li><a href="lab5_form.html" class="active">Лаб. работа №5</a></li>
+            </ul>
+        </div>
+    </nav>
+    
+    <main>
+        <div class="container">
+            <section id="lab5-form">
+                <h2>Лабораторная работа №5 - Форма осмотра пациента</h2>
+                <p><strong>Вариант 21:</strong> Создать форму добавления данных осмотра больного для сайта больницы.</p>
+                
+                <!-- Форма осмотра пациента -->
+                <form action="mailto:hospital@example.com" method="post">
+                    <table border align="center">
+                        <tr>
+                            <td>ФИО пациента:</td>
+                            <td><input type="text" name="patient_name" value="Иванов Иван Иванович"></td>
+                        </tr>
+                        <tr>
+                            <td>Возраст:</td>
+                            <td><input type="number" name="age" value="35"></td>
+                        </tr>
+                        <tr>
+                            <td>Дата рождения:</td>
+                            <td><input type="date" name="birth_date"></td>
+                        </tr>
+                        <tr>
+                            <td>Пол:</td>
+                            <td align="center">
+                                <input type="radio" name="gender" value="male" checked>Мужской
+                                <input type="radio" name="gender" value="female">Женский
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Отделение:</td>
+                            <td>
+                                <select name="department">
+                                    <option value="therapy">Терапевтическое</option>
+                                    <option value="surgery">Хирургическое</option>
+                                    <option value="neurology">Неврологическое</option>
+                                    <option value="cardiology">Кардиологическое</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Дата осмотра:</td>
+                            <td><input type="date" name="examination_date" id="examination_date"></td>
+                        </tr>
+                        <tr>
+                            <td>Жалобы:</td>
+                            <td><textarea name="complaints" rows="3" cols="30">Головная боль, повышенная температура</textarea></td>
+                        </tr>
+                        <tr>
+                            <td>Диагноз:</td>
+                            <td><textarea name="diagnosis" rows="3" cols="30">Острое респираторное заболевание</textarea></td>
+                        </tr>
+                        <tr>
+                            <td>Температура тела:</td>
+                            <td><input type="text" name="temperature" value="37.8"> °C</td>
+                        </tr>
+                        <tr>
+                            <td>Артериальное давление:</td>
+                            <td><input type="text" name="blood_pressure" value="120/80"> мм рт.ст.</td>
+                        </tr>
+                        <tr>
+                            <td>Пульс:</td>
+                            <td><input type="number" name="pulse" value="78"> уд/мин</td>
+                        </tr>
+                        <tr>
+                            <td>Назначения:</td>
+                            <td><textarea name="prescription" rows="4" cols="30">Постельный режим, обильное питье, жаропонижающие препараты</textarea></td>
+                        </tr>
+                        <tr>
+                            <td>Лечащий врач:</td>
+                            <td>
+                                <select name="doctor">
+                                    <option value="Иванов А.С.">Иванов А.С. (хирург)</option>
+                                    <option value="Петрова М.И." selected>Петрова М.И. (терапевт)</option>
+                                    <option value="Сидоров В.П.">Сидоров В.П. (невролог)</option>
+                                    <option value="Федоров К.И.">Федоров К.И. (кардиолог)</option>
+                                    <option value="Васильева О.Л.">Васильева О.Л. (педиатр)</option>
+                                    <option value="Козлов Д.В.">Козлов Д.В. (травматолог)</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td align="center">
+                                <input type="submit" value="Сохранить данные" class="submit-btn">
+                            </td>
+                            <td align="center">
+                                <input type="reset" value="Очистить форму" class="reset-btn">
+                            </td>
+                        </tr>
+                    </table>
+                </form>
+            </section>
+        </div>
+    </main>
+    
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 Городская больница №33. Все права защищены.</p>
+            <p>Лабораторная работа №5 - Создание форм в HTML-документах</p>
+        </div>
+    </footer>
+
+    <script>
+        // Устанавливаем сегодняшнюю дату для поля "Дата осмотра"
+        document.getElementById('examination_date').valueAsDate = new Date();
+    </script>
+</body>
+</html>
